@@ -1,0 +1,264 @@
+{
+	"info": {
+		"_postman_id": "cc52e942-03d2-42f6-a3f8-3a585592c000",
+		"name": "OCS Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Well Known Open ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"authorization_endpoint\", pm.response.json().token_endpoint);",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dat-b.osisoft.com/identity/.well-known/openid-configuration",
+					"protocol": "https",
+					"host": [
+						"dat-b",
+						"osisoft",
+						"com"
+					],
+					"path": [
+						"identity",
+						".well-known",
+						"openid-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Bearer Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{ClientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{ClientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{authorization_endpoint}}",
+					"host": [
+						"{{authorization_endpoint}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Namespaces",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dat-b.osisoft.com/api/v1/Tenants/{{TenantId}}/Namespaces",
+					"protocol": "https",
+					"host": [
+						"dat-b",
+						"osisoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Tenants",
+						"{{TenantId}}",
+						"Namespaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Streams",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dat-b.osisoft.com/api/v1/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams",
+					"protocol": "https",
+					"host": [
+						"dat-b",
+						"osisoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Tenants",
+						"{{TenantId}}",
+						"Namespaces",
+						"{{NamespaceId}}",
+						"Streams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data for Stream",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dat-b.osisoft.com/api/v1/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams/{{StreamId}}/Data?startIndex=<REPLACE_WITH_START_INDEX>&count=<REPLACE_WITH_COUNT>",
+					"protocol": "https",
+					"host": [
+						"dat-b",
+						"osisoft",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Tenants",
+						"{{TenantId}}",
+						"Namespaces",
+						"{{NamespaceId}}",
+						"Streams",
+						"{{StreamId}}",
+						"Data"
+					],
+					"query": [
+						{
+							"key": "startIndex",
+							"value": "<REPLACE_WITH_START_INDEX>"
+						},
+						{
+							"key": "count",
+							"value": "<REPLACE_WITH_COUNT>"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ClientId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "ClientSecret",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "TenantId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "NamespaceId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "StreamId",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

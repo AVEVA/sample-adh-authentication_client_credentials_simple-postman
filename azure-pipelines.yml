@@ -1,0 +1,62 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+
+schedules:
+  - cron: '0 0 * * 0'
+    displayName: Weekly build
+    branches:
+      include:
+        - main
+    always: true
+
+resources:
+  repositories:
+    - repository: OpsGuildAutomationRepo
+      type: git
+      name: Engineering/OpsGuild.Automation
+      ref: refs/heads/main
+    - repository: templates
+      type: github
+      name: osisoft/OSI-Samples
+      endpoint: osisoft/OSI-Samples
+
+variables:
+  - template: '/miscellaneous/build_templates/variables.yml@templates'
+  - name: analysisProject
+    value: Auth-CC_Postman
+
+jobs:
+  - job: Tests
+    pool:
+      name: 00-OSIManaged-Containers
+      demands: Agent.OS -equals Windows_NT
+    steps:
+      - template: '/miscellaneous/build_templates/appsettings.yml@templates'
+        parameters:
+          secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, StreamId'
+
+      - script: npm ci
+        displayName: 'Install dependencies'
+
+      - script: newman run .\postman_collection.json -d .\appsettings.json --verbose
+        displayName: 'Run tests'
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: '*.xml'
+          failTaskOnFailedTests: true
+          searchFolder: '$(Build.SourcesDirectory)/TestResults'
+          testRunTitle: '$(Agent.JobName) on $(Agent.OS)'
+        displayName: 'Publish test results'
+        condition: always()
+
+  - template: '/miscellaneous/build_templates/code-analysis.yml@templates'

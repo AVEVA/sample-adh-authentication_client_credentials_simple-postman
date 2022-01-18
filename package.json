@@ -1,0 +1,22 @@
+{
+  "name": "sample-ocs-authentication-postman",
+  "version": "1.0.0",
+  "description": "Sample Postman collection demonstrating how to retrieve a bearer token for OCS using a Client Credentials Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osisoft/sample-ocs-authentication-postman.git"
+  },
+  "author": "OSIsoft Cloud Services",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osisoft/sample-ocs-authentication-postman/issues"
+  },
+  "homepage": "https://github.com/osisoft/sample-ocs-authentication-postman#readme",
+  "dependencies": {
+    "newman": "^5.3.1"
+  }
+}
