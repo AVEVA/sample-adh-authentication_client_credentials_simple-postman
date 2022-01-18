@@ -5,7 +5,7 @@
 
 **Version:** 1.0.0
 
-[![Build Status](CCCCCCCCCCCCCCCCC)
+[![Build Status](CCCCCCCCCCCCCCCCC)]
 
 ## Requirements
 
