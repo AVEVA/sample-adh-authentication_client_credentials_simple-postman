@@ -43,9 +43,12 @@ jobs:
         parameters:
           secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, StreamId'
 
+      - script: npm install -g newman
+        displayName: 'Install newman'
+
       - script: npm ci
         displayName: 'Install dependencies'
-
+        
       - script: newman run .\postman_collection.json -d .\appsettings.json --verbose
         displayName: 'Run tests'
 
