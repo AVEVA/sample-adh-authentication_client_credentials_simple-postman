@@ -40,15 +40,15 @@ jobs:
       demands: Agent.OS -equals Windows_NT
     variables:
       - name: 0.TenantId
-        value: TenantId
+        value: $(TenantId)
       - name: 0.NamespaceId
-        value: NamespaceId
+        value: $(NamespaceId)
       - name: 0.ClientId
-        value: ClientId
+        value: $(ClientId)
       - name: 0.ClientSecret
-        value: ClientSecret
+        value: $(ClientSecret)
       - name: 0.StreamId
-        value: StreamId
+        value: $(StreamId)
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
