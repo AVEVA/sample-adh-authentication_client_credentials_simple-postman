@@ -22,7 +22,9 @@ This sample is meant to be very simple and straightforward to show how you can u
 ## Configuring the sample
 
 Steps:
-1. Import the [collection file](postman_collection.json) to Postman by selecting Collections in the left sidebar and clicking 'Import'.
+1. Clone the GitHub repository
+1. Open Postman
+1. Import the [postman_collection.json](postman_collection.json) file to Postman by selecting Collections in the left sidebar and clicking 'Import'.
 1. Edit the imported collection by clicking its title, then under the 'Variables' tab add your client Id and secret to the corresponding variable under the 'Current Value' column. 
 1. Optionally, to test some interactions with the OCS APIs, add your Tenant Id, Namespace Id, and Stream Id to the corresponding variables. This will let you use the authentication token that we retrieve to make calls to OCS.
 
