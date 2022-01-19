@@ -1,4 +1,4 @@
-**Version:** 1.0.0
+**Version:** 0.1
 
 
 # OSIsoft Cloud Services Client Authentication Postman Collection
@@ -17,7 +17,7 @@
 
 ## About this sample collection
 
-This sample is meant to be very simple and straightforward to show how you can use Postman to retrieve a bearer token for authenticating against OCS.
+This sample is meant to be a simple introduction to show how you can use Postman to retrieve a bearer token for authenticating against OCS.
 
 ## Configuring the sample
 
