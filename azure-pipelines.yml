@@ -38,6 +38,17 @@ jobs:
     pool:
       name: 00-OSIManaged-Containers
       demands: Agent.OS -equals Windows_NT
+    variables:
+      - name: 0.TenantId
+        value: TenantId
+      - name: 0.NamespaceId
+        value: NamespaceId
+      - name: 0.ClientId
+        value: ClientId
+      - name: 0.ClientSecret
+        value: ClientSecret
+      - name: 0.StreamId
+        value: StreamId
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
