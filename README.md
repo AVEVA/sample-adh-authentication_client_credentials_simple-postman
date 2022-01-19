@@ -1,8 +1,7 @@
-**Version:** 0.1
+**Version:** 1.0
 
 
 # OSIsoft Cloud Services Client Authentication Postman Collection
-
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/OCS/osisoft.sample-ocs-authentication-postman?repoName=osisoft%2Fsample-ocs-authentication-postman&branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=4512&repoName=osisoft%2Fsample-ocs-authentication-postman&branchName=main)
 
