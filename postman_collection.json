@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "45280dae-657b-48f2-a49e-10890dddb0a6",
+		"_postman_id": "a568b34b-779e-4d24-8f31-917eb8a5506a",
 		"name": "OCS Authentication",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,12 +29,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://dat-b.osisoft.com/identity/.well-known/openid-configuration",
-					"protocol": "https",
+					"raw": "{{Resource}}/identity/.well-known/openid-configuration",
 					"host": [
-						"dat-b",
-						"osisoft",
-						"com"
+						"{{Resource}}"
 					],
 					"path": [
 						"identity",
@@ -46,7 +43,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Bearer Token",
+			"name": "Get or Refresh Bearer Token",
 			"event": [
 				{
 					"listen": "test",
@@ -102,9 +99,13 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
+							"if (pm.collectionVariables.get(\"TenantId\") != '') \r",
+							"{\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -124,16 +125,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://dat-b.osisoft.com/api/v1/Tenants/{{TenantId}}/Namespaces",
-					"protocol": "https",
+					"raw": "{{Resource}}/api/{{ApiVersion}}/Tenants/{{TenantId}}/Namespaces",
 					"host": [
-						"dat-b",
-						"osisoft",
-						"com"
+						"{{Resource}}"
 					],
 					"path": [
 						"api",
-						"v1",
+						"{{ApiVersion}}",
 						"Tenants",
 						"{{TenantId}}",
 						"Namespaces"
@@ -149,9 +147,23 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.collectionVariables.get(\"NamespaceId\") != '' \r",
+							"    && pm.collectionVariables.get(\"TenantId\") != '') \r",
+							"{\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -171,16 +183,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://dat-b.osisoft.com/api/v1/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams",
-					"protocol": "https",
+					"raw": "{{Resource}}/api/{{ApiVersion}}/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams",
 					"host": [
-						"dat-b",
-						"osisoft",
-						"com"
+						"{{Resource}}"
 					],
 					"path": [
 						"api",
-						"v1",
+						"{{ApiVersion}}",
 						"Tenants",
 						"{{TenantId}}",
 						"Namespaces",
@@ -198,9 +207,15 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
+							"if (pm.collectionVariables.get(\"NamespaceId\") != '' \r",
+							"    && pm.collectionVariables.get(\"TenantId\") != ''\r",
+							"    && pm.collectionVariables.get(\"StreamId\") != '') \r",
+							"{\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -220,16 +235,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://dat-b.osisoft.com/api/v1/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams/{{StreamId}}/Data?startIndex=<REPLACE_WITH_START_INDEX>&count=<REPLACE_WITH_COUNT>",
-					"protocol": "https",
+					"raw": "{{Resource}}/api/{{ApiVersion}}/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams/{{StreamId}}/Data?startIndex=<REPLACE_WITH_START_INDEX>&count=<REPLACE_WITH_COUNT>",
 					"host": [
-						"dat-b",
-						"osisoft",
-						"com"
+						"{{Resource}}"
 					],
 					"path": [
 						"api",
-						"v1",
+						"{{ApiVersion}}",
 						"Tenants",
 						"{{TenantId}}",
 						"Namespaces",
@@ -297,6 +309,16 @@
 		{
 			"key": "StreamId",
 			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "Resource",
+			"value": "https://dat-b.osisoft.com",
+			"type": "default"
+		},
+		{
+			"key": "ApiVersion",
+			"value": "v1",
 			"type": "default"
 		}
 	]

@@ -1,4 +1,4 @@
-**Version:** 1.0
+**Version:** 1.0.0
 
 
 # OSIsoft Cloud Services Client Authentication Postman Collection
@@ -25,31 +25,36 @@ Steps:
 1. Open Postman
 1. Import the [postman_collection.json](postman_collection.json) file to Postman by selecting Collections in the left sidebar and clicking 'Import'.
 1. Edit the imported collection by clicking its title, then under the 'Variables' tab add your client Id and secret to the corresponding variable under the 'Current Value' column. 
-1. Optionally, to test some interactions with the OCS APIs, add your Tenant Id, Namespace Id, and Stream Id to the corresponding variables. This will let you use the authentication token that we retrieve to make calls to OCS.
+1. Optionally, to test some interactions with the OCS APIs, add your Tenant Id, Namespace Id, and Stream Id to the corresponding variables. This will let you use the authentication token that we retrieve to make requests to OCS.
 
 ![Adding Variables](Images/variables.png)
 
 For more information on collection variables, see the [Postman docs](https://learning.postman.com/docs/sending-requests/variables/#defining-collection-variables)
 
-OSIsoft Cloud Services is secured by obtaining tokens from its identity endpoint, retrieved here by calling 'Get Well Known Open ID'. Client credential clients provide an identifier and an associated secret that are authenticated against the token endpoint. Below we will make a call to this identity endpoint using the 'Get Bearer Token' request with the now entered client identifier and secret to retrieve the token.
+OSIsoft Cloud Services is secured by obtaining tokens from its identity endpoint, retrieved here by executing the 'Get Well Known Open ID' request. Client credential clients provide an identifier and an associated secret that are authenticated against the token endpoint. Below we will make a request to this identity endpoint using the 'Get or Refresh Bearer Token' request with the now entered client identifier and secret to retrieve the token.
 
 ## Running the sample
 
 To run this collection complete the following steps
 
-1. Execute the 'Get Well Known Open ID' call to get the authorization endpoint to hit when getting the bearer token. (See this value now reflected as a variable 'authorization_endpoint' in the collection, and used as URL for the bearer token call)
-1. Execute the 'Get Bearer Token' call, which uses the 'ClientId' and 'ClientSecret' variables to retrieve an authorization token. 
-1. See the token returned in the response under the 'access_token' key. A collection variable containing the token should also have been created.
+1. Execute the 'Get Well Known Open ID' request to get the authorization endpoint to hit when getting the bearer token. See this value now reflected as a variable 'authorization_endpoint' in the collection. This is a one time step, once you now have this endpoint stored you can simply execute 'Get or Refresh Bearer Token' to get or refresh your token.
+1. Execute the 'Get or Refresh Bearer Token' request to retrieve an authorization token. 
+1. See the token returned in the response under the 'access_token' key. This value can now be used to authenticate your requests. A collection variable called 'token' containing this value has also been created.
 
-The token can now be used in your requests by configuring it as Bearer token in the 'Auth' section. Take a look at the 'Get Namespaces' request for example.
+To use the token in your requests, either copy the value and paste it as the 'Token' under the 'Auth' section of the request, using the 'Bearer Token' authentication type, or simply use the 'token' variable created for you. Take a look at the 'Get Namespaces' request for example.
 
 ![Placeholders](Images/token.png)
 
-**Note:** We have created the 'token' variable from the access_token using the 'Tests' section of the 'Get Bearer Token' request, but you can also simply copy-paste the 'access_token' value from the 'Get Bearer Token' request as the Token for your requests.
+We have created this variable by adding a Javascript test under the 'Tests' section of the 'Get or Refresh Bearer Token' request that will store the token value every time you execute the request. This is to make refreshing the token simpler, but if desired you can also copy-paste the 'access_token' value from the 'Get or Refresh Bearer Token' response to use as the 'Token' for your requests. 
+
+### Refresh Token
+The token has an expiration time after which it expires that is returned under the 'expires_in' key in the response. You should see this set to 3600 in the response, meaning 3600 seconds (1 hour). 
+
+Once the token has expired, execute the 'Get or Refresh Bearer Token' request to see the new value reflected in the 'token' variable or to copy the new 'access_token' to use in your requests.
 
 ### Sample OCS requests
 
-Optionally, if you entered Tenant, Namespace, and Stream identifiers mentioned in the 'Configuring the Sample' section above, execute the remaining 'Get Namespaces', 'Get Streams', and 'Get Data for Stream' requests. 
+If you entered Tenant, Namespace, and Stream identifiers mentioned in the 'Configuring the Sample' section above, execute the remaining 'Get Namespaces', 'Get Streams', and 'Get Data for Stream' requests to see some OCS API use cases. 
 
 **Note**: To make the 'Get Data for Stream' request you will also need to replace the placeholders for start index and count under the Params columns.
 
@@ -77,4 +82,7 @@ newman run ./postman_collection.json -d ./appsettings.json
 
 ---
 
+Tested against Postman v9.9.3
+For the main OCS Authentication samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/AUTHENTICATION.md)  
+For the main OCS samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
 For the main OSIsoft samples page [ReadMe](https://github.com/osisoft/OSI-Samples)
