@@ -1,47 +1,10 @@
 {
 	"info": {
-		"_postman_id": "a568b34b-779e-4d24-8f31-917eb8a5506a",
+		"_postman_id": "a0f08a55-02c6-42fb-b062-3d248ef1ea48",
 		"name": "OCS Authentication",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
-		{
-			"name": "Get Well Known Open ID",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"pm.collectionVariables.set(\"authorization_endpoint\", pm.response.json().token_endpoint);",
-							"",
-							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{Resource}}/identity/.well-known/openid-configuration",
-					"host": [
-						"{{Resource}}"
-					],
-					"path": [
-						"identity",
-						".well-known",
-						"openid-configuration"
-					]
-				}
-			},
-			"response": []
-		},
 		{
 			"name": "Get or Refresh Bearer Token",
 			"event": [
@@ -58,9 +21,29 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest('https://dat-b.osisoft.com/identity/.well-known/openid-configuration', (error, response) => {\r",
+							"  if (error) {\r",
+							"    console.log(error);\r",
+							"  } else {\r",
+							"    jsonResponse = JSON.parse(response.text())\r",
+							"    token_endpoint = jsonResponse['token_endpoint']\r",
+							"    pm.collectionVariables.set('token_endpoint', token_endpoint)\r",
+							"  }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -84,9 +67,9 @@
 					]
 				},
 				"url": {
-					"raw": "{{authorization_endpoint}}",
+					"raw": "{{token_endpoint}}",
 					"host": [
-						"{{authorization_endpoint}}"
+						"{{token_endpoint}}"
 					]
 				}
 			},

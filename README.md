@@ -25,19 +25,23 @@ Steps:
 1. Open Postman
 1. Import the [postman_collection.json](postman_collection.json) file to Postman by selecting Collections in the left sidebar and clicking 'Import'.
 1. Edit the imported collection by clicking its title, then under the 'Variables' tab add your client Id and secret to the corresponding variable under the 'Current Value' column. 
+1. Save the collection using 'ctrl-s' or by clicking the disk icon. 
 1. Optionally, to test some interactions with the OCS APIs, add your Tenant Id, Namespace Id, and Stream Id to the corresponding variables. This will let you use the authentication token that we retrieve to make requests to OCS.
+
+Note: Make sure to always save the collection if you make any changes to the variables.
 
 ![Adding Variables](Images/variables.png)
 
 For more information on collection variables, see the [Postman docs](https://learning.postman.com/docs/sending-requests/variables/#defining-collection-variables)
 
-OSIsoft Cloud Services is secured by obtaining tokens from its identity endpoint, retrieved here by executing the 'Get Well Known Open ID' request. Client credential clients provide an identifier and an associated secret that are authenticated against the token endpoint. Below we will make a request to this identity endpoint using the 'Get or Refresh Bearer Token' request with the now entered client identifier and secret to retrieve the token.
+OSIsoft Cloud Services is secured by obtaining tokens from its token endpoint. Client credential clients provide an identifier and an associated secret that are authenticated against this endpoint which we can see in the 'Get or Refresh Bearer Token' request. 
+
+(This token endpoint is obtained automatically behind the scenes, but if you are interested in how, you can see it being obtained in the 'Pre-request Script' of the 'Get or Refresh Bearer Token' request)
 
 ## Running the sample
 
 To run this collection complete the following steps
 
-1. Execute the 'Get Well Known Open ID' request to get the authorization endpoint to hit when getting the bearer token. See this value now reflected as a variable 'authorization_endpoint' in the collection. This is a one time step, once you now have this endpoint stored you can simply execute 'Get or Refresh Bearer Token' to get or refresh your token.
 1. Execute the 'Get or Refresh Bearer Token' request to retrieve an authorization token. 
 1. See the token returned in the response under the 'access_token' key. This value can now be used to authenticate your requests. A collection variable called 'token' containing this value has also been created.
 
@@ -48,7 +52,7 @@ To use the token in your requests, either copy the value and paste it as the 'To
 We have created this variable by adding a Javascript test under the 'Tests' section of the 'Get or Refresh Bearer Token' request that will store the token value every time you execute the request. This is to make refreshing the token simpler, but if desired you can also copy-paste the 'access_token' value from the 'Get or Refresh Bearer Token' response to use as the 'Token' for your requests. 
 
 ### Refresh Token
-The token has an expiration time after which it expires that is returned under the 'expires_in' key in the response. You should see this set to 3600 in the response, meaning 3600 seconds (1 hour). 
+The token has an expiration time after which it expires that is returned under the 'expires_in' key in the response. You should see this set to 3600 in the response, meaning 3600 seconds (1 hour). This expiration time is configurable by editing your client credentials client in the portal.
 
 Once the token has expired, execute the 'Get or Refresh Bearer Token' request to see the new value reflected in the 'token' variable or to copy the new 'access_token' to use in your requests.
 
