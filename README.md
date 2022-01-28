@@ -7,11 +7,8 @@
 
 ## Requirements
 
-- Postman 
+- [Postman](https://www.postman.com/downloads/) version 8.0 or later.
 - Register a [Client-Credentials Client](https://cloud.osisoft.com/clients) in your OSIsoft Cloud Services tenant and create a client secret to use in the configuration of this sample. ([Video Walkthrough](https://www.youtube.com/watch?v=JPWy0ZX9niU))
-  - __NOTE__: This sample only requires the `Tenant Member` role to run successfully 
-    - see: ['Authorization Allowed for these roles' in the documentation](https://docs.osisoft.com/bundle/ocs/page/api-reference/tenant/tenant-tenants.html#get-tenant) 
-  - It is strongly advised to not elevate the permissions of a client beyond what is necessary.
 - Optional: access to a Tenant Id, Namespace Id, and Stream Id 
 
 ## About this sample collection
@@ -23,7 +20,7 @@ This sample is meant to be a simple introduction to show how you can use Postman
 Steps:
 1. Clone the GitHub repository
 1. Open Postman
-1. Import the [postman_collection.json](postman_collection.json) file to Postman by selecting Collections in the left sidebar and clicking 'Import'.
+1. Import the [postman_collection.json](postman_collection.json) file to Postman by selecting Collections in the left sidebar and clicking 'Import'. Import the collection as version 2.1 as recommended.
 1. Edit the imported collection by clicking its title, then under the 'Variables' tab add your client Id and secret to the corresponding variable under the 'Current Value' column. 
 1. Save the collection using 'ctrl-s' or by clicking the disk icon. 
 1. Optionally, to test some interactions with the OCS APIs, add your Tenant Id, Namespace Id, and Stream Id to the corresponding variables. This will let you use the authentication token that we retrieve to make requests to OCS.
@@ -51,16 +48,16 @@ To use the token in your requests, either copy the value and paste it as the 'To
 
 We have created this variable by adding a Javascript test under the 'Tests' section of the 'Get or Refresh Bearer Token' request that will store the token value every time you execute the request. This is to make refreshing the token simpler, but if desired you can also copy-paste the 'access_token' value from the 'Get or Refresh Bearer Token' response to use as the 'Token' for your requests. 
 
-### Refresh Token
+### Refreshing the Token
 The token has an expiration time after which it expires that is returned under the 'expires_in' key in the response. You should see this set to 3600 in the response, meaning 3600 seconds (1 hour). This expiration time is configurable by editing your client credentials client in the portal.
 
 Once the token has expired, execute the 'Get or Refresh Bearer Token' request to see the new value reflected in the 'token' variable or to copy the new 'access_token' to use in your requests.
 
 ### Sample OCS requests
 
-If you entered Tenant, Namespace, and Stream identifiers mentioned in the 'Configuring the Sample' section above, execute the remaining 'Get Namespaces', 'Get Streams', and 'Get Data for Stream' requests to see some OCS API use cases. 
+If you entered Tenant, Namespace, and Stream identifiers mentioned in the 'Configuring the Sample' section above, execute the remaining 'Get Tenant Info', 'Get Namespaces', 'Get Streams', and 'Get Data for Stream' requests to see some OCS API use cases. 
 
-**Note**: To make the 'Get Data for Stream' request you will also need to replace the placeholders for start index and count under the Params columns.
+**Note**: To make the 'Get Data for Stream' request you will need to replace the placeholders for start index and count under the Params columns. It is also required that the client you are using has the required permissions to read data for the stream, for more information see the video walkthrough of creating a client ([Video Walkthrough](https://www.youtube.com/watch?v=JPWy0ZX9niU)).
 
 ![Placeholders](Images/placeholders.png)
 
