@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "a7328756-3f73-4036-a67c-75223e1749ac",
-		"name": "OCS Authentication",
+		"name": "ADH Authentication",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -26,7 +26,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.sendRequest('https://dat-b.osisoft.com/identity/.well-known/openid-configuration', (error, response) => {\r",
+							"pm.sendRequest('https://uswe.datahub.connect.aveva/identity/.well-known/openid-configuration', (error, response) => {\r",
 							"  if (error) {\r",
 							"    console.log(error);\r",
 							"  } else {\r",
@@ -343,7 +343,7 @@
 		},
 		{
 			"key": "Resource",
-			"value": "https://dat-b.osisoft.com",
+			"value": "https://uswe.datahub.connect.aveva",
 			"type": "default"
 		},
 		{

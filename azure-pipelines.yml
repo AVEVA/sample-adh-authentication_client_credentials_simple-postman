@@ -52,7 +52,7 @@ jobs:
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, StreamId'
+          secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, StreamId, Resource'
 
       - script: npm install -g newman
         displayName: 'Install newman'
