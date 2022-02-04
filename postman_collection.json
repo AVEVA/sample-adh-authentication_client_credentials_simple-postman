@@ -26,7 +26,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"pm.sendRequest('https://uswe.datahub.connect.aveva/identity/.well-known/openid-configuration', (error, response) => {\r",
+							"pm.sendRequest(pm.collectionVariables.get('Resource') + '/identity/.well-known/openid-configuration', (error, response) => {\r",
 							"  if (error) {\r",
 							"    console.log(error);\r",
 							"  } else {\r",
