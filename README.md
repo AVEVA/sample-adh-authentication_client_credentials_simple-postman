@@ -11,7 +11,8 @@
 
 - [Postman](https://www.postman.com/downloads/) version 8.0 or later.
 - Register a [Client-Credentials Client](https://datahub.connect.aveva/clients) in your AVEVA Data Hub tenant and create a client secret to use in the configuration of this sample. ([Video Walkthrough](https://www.youtube.com/watch?v=JPWy0ZX9niU))
-- Optional: access to a Tenant Id, Namespace Id, and Stream Id 
+- Access to a Tenant Id
+- Optional: access to a Namespace Id and Stream Id 
 
 ## About this sample collection
 
@@ -23,9 +24,9 @@ Steps:
 1. Clone the GitHub repository
 1. Open Postman
 1. Import the [postman_collection.json](postman_collection.json) file to Postman by selecting Collections in the left sidebar and clicking 'Import'. Import the collection as version 2.1 as recommended.
-1. Edit the imported collection by clicking its title, then under the 'Variables' tab add your client Id and secret to the corresponding variable under the 'Current Value' column. 
+1. Edit the imported collection by clicking its title, then under the 'Variables' tab add your client Id, client secret, and tenant Id to the corresponding variable under the 'Current Value' column. 
 1. Save the collection using 'ctrl-s' or by clicking the disk icon. 
-1. Optionally, to test some interactions with the ADH APIs, add your Tenant Id, Namespace Id, and Stream Id to the corresponding variables. This will let you use the authentication token that we retrieve to make requests to ADH.
+1. Optionally, to test some interactions with the ADH APIs, add a Namespace Id and Stream Id to the corresponding variables. This will let you use the authentication token that we retrieve to make some sample requests to ADH.
 
 Note: Make sure to always save the collection if you make any changes to the variables.
 
@@ -55,9 +56,13 @@ The token has an expiration time after which it expires that is returned under t
 
 Once the token has expired, execute the 'Get or Refresh Bearer Token' request to see the new value reflected in the 'token' variable or to copy the new 'access_token' to use in your requests.
 
+### Get Tenant Info
+
+The 'Get Tenant Info' request will use your tenant Id and the token to call the ADH Tenant API, returning the basic information for your tenant. Execute the request to see the result.  
+
 ### Sample ADH requests
 
-If you entered Tenant, Namespace, and Stream identifiers mentioned in the 'Configuring the Sample' section above, execute the remaining 'Get Tenant Info', 'Get Namespaces', 'Get Streams', and 'Get Data for Stream' requests to see some ADH API use cases. 
+If you entered namespace and stream identifiers mentioned in the 'Configuring the Sample' section above, execute the remaining 'Get Namespaces', 'Get Streams', and 'Get Data for Stream' requests to see some ADH API use cases. 
 
 **Note**: To make the 'Get Data for Stream' request you will need to replace the placeholders for start index and count under the Params columns. It is also required that the client you are using has the required permissions to read data for the stream, for more information see the video walkthrough of creating a client ([Video Walkthrough](https://www.youtube.com/watch?v=JPWy0ZX9niU)).
 

@@ -49,6 +49,8 @@ jobs:
         value: $(ClientSecret)
       - name: 0.StreamId
         value: $(StreamId)
+      - name: 0.Resource
+        value: $(Resource)
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
