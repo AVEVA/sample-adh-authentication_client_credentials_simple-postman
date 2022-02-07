@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "a7328756-3f73-4036-a67c-75223e1749ac",
+		"name": "ADH Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get or Refresh Bearer Token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.collectionVariables.set(\"token\", jsonData.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest(pm.collectionVariables.get('Resource') + '/identity/.well-known/openid-configuration', (error, response) => {\r",
+							"  if (error) {\r",
+							"    console.log(error);\r",
+							"  } else {\r",
+							"    jsonResponse = JSON.parse(response.text())\r",
+							"    token_endpoint = jsonResponse['token_endpoint']\r",
+							"    pm.collectionVariables.set('token_endpoint', token_endpoint)\r",
+							"  }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "client_id",
+							"value": "{{ClientId}}",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "{{ClientSecret}}",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{token_endpoint}}",
+					"host": [
+						"{{token_endpoint}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Tenant Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.collectionVariables.get(\"TenantId\") != '') \r",
+							"{\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Resource}}/api/{{ApiVersion}}/Tenants/{{TenantId}}",
+					"host": [
+						"{{Resource}}"
+					],
+					"path": [
+						"api",
+						"{{ApiVersion}}",
+						"Tenants",
+						"{{TenantId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Namespaces",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.collectionVariables.get(\"TenantId\") != '') \r",
+							"{\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Resource}}/api/{{ApiVersion}}/Tenants/{{TenantId}}/Namespaces",
+					"host": [
+						"{{Resource}}"
+					],
+					"path": [
+						"api",
+						"{{ApiVersion}}",
+						"Tenants",
+						"{{TenantId}}",
+						"Namespaces"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Streams",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.collectionVariables.get(\"NamespaceId\") != '' \r",
+							"    && pm.collectionVariables.get(\"TenantId\") != '') \r",
+							"{\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Resource}}/api/{{ApiVersion}}/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams",
+					"host": [
+						"{{Resource}}"
+					],
+					"path": [
+						"api",
+						"{{ApiVersion}}",
+						"Tenants",
+						"{{TenantId}}",
+						"Namespaces",
+						"{{NamespaceId}}",
+						"Streams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Data for Stream",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if (pm.collectionVariables.get(\"NamespaceId\") != '' \r",
+							"    && pm.collectionVariables.get(\"TenantId\") != ''\r",
+							"    && pm.collectionVariables.get(\"StreamId\") != '') \r",
+							"{\r",
+							"    pm.test(\"Status code is 200\", function () {\r",
+							"        pm.response.to.have.status(200);\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Resource}}/api/{{ApiVersion}}/Tenants/{{TenantId}}/Namespaces/{{NamespaceId}}/Streams/{{StreamId}}/Data?startIndex=<REPLACE_WITH_START_INDEX>&count=<REPLACE_WITH_COUNT>",
+					"host": [
+						"{{Resource}}"
+					],
+					"path": [
+						"api",
+						"{{ApiVersion}}",
+						"Tenants",
+						"{{TenantId}}",
+						"Namespaces",
+						"{{NamespaceId}}",
+						"Streams",
+						"{{StreamId}}",
+						"Data"
+					],
+					"query": [
+						{
+							"key": "startIndex",
+							"value": "<REPLACE_WITH_START_INDEX>"
+						},
+						{
+							"key": "count",
+							"value": "<REPLACE_WITH_COUNT>"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ClientId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "ClientSecret",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "TenantId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "NamespaceId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "StreamId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "Resource",
+			"value": "https://uswe.datahub.connect.aveva.com",
+			"type": "default"
+		},
+		{
+			"key": "ApiVersion",
+			"value": "v1",
+			"type": "default"
+		}
+	]
+}
