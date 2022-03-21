@@ -1,6 +1,6 @@
 {
   "name": "sample-adh-authentication-postman",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sample Postman collection demonstrating how to retrieve a bearer token for ADH using a Client Credentials Client",
   "main": "index.js",
   "scripts": {
@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/osisoft/sample-adh-authentication-postman#readme",
   "dependencies": {
-    "newman": "^5.3.1"
+    "newman": "^5.3.2"
   }
 }
