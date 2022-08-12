@@ -1,6 +1,6 @@
 {
   "name": "sample-adh-authentication-postman",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Sample Postman collection demonstrating how to retrieve a bearer token for ADH using a Client Credentials Client",
   "main": "index.js",
   "scripts": {
