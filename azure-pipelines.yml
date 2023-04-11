@@ -52,15 +52,15 @@ jobs:
       - name: 0.NamespaceId
         value: $(NamespaceId)
       - name: 0.ClientId
-        value: $(ClientId-ADH)
+        value: $(ClientId)
       - name: 0.ClientSecret
-        value: $(ClientSecret-ADH)
+        value: $(ClientSecret)
       - name: 0.StreamId
         value: $(StreamId)
     steps:
       - template: '/miscellaneous/build_templates/appsettings.yml@templates'
         parameters:
-          secrets: 'TenantId, NamespaceId, ClientId-ADH, ClientSecret-ADH, StreamId'
+          secrets: 'TenantId, NamespaceId, ClientId, ClientSecret, StreamId'
 
       - script: npm install -g newman
         displayName: 'Install newman'
