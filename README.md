@@ -1,6 +1,6 @@
 # AVEVA Data Hub Client Authentication Postman Collection
 
-**Version:** 1.0.2
+**Version:** 1.0.3
 
 | :loudspeaker: **Notice**: Samples have been updated to reflect that they work on AVEVA Data Hub. The samples also work on OSIsoft Cloud Services unless otherwise noted. |
 | -----------------------------------------------------------------------------------------------|  

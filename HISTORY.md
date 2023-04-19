@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.3 / 2023-04-11
+
+- Update secrets in pipeline
+
 ## 1.0.2 / 2022-08-10
 
 - Add dependabot.yml to automate dependency checks
