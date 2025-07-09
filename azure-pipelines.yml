@@ -67,7 +67,7 @@ jobs:
       - script: npm ci
         displayName: 'Install dependencies'
         
-      - script: newman run .\postman_collection.json -d .\appsettings.json --verbose
+      - script: newman run postman_collection.json -d appsettings.json --verbose
         displayName: 'Run tests'
 
       - task: PublishTestResults@2

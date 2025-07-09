@@ -1,5 +1,9 @@
 # Version History
 
+## 1.0.6 / 2025-07-09
+
+- Newton command line fix
+
 ## 1.0.5 / 2023-10-13
 
 - Migrate Pipelines
