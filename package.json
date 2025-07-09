@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/osisoft/sample-adh-authentication-postman#readme",
   "dependencies": {
-    "newman": "^6.1.2"
+    "newman": "^6.2.0"
   }
 }
