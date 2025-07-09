@@ -1,6 +1,6 @@
 # CONNECT data services Client Authentication Postman Collection
 
-**Version:** 1.0.5
+**Version:** 1.0.6
 
 [![Build Status](https://dev.azure.com/AVEVA-VSTS/Cloud%20Platform/_apis/build/status%2Fproduct-readiness%2FADH%2FAVEVA.sample-adh-authentication_client_credentials_simple-postman?repoName=AVEVA%2Fsample-adh-authentication_client_credentials_simple-postman&branchName=main)](https://dev.azure.com/AVEVA-VSTS/Cloud%20Platform/_build/latest?definitionId=16195&repoName=AVEVA%2Fsample-adh-authentication_client_credentials_simple-postman&branchName=main)
 
